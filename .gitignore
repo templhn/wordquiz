@@ -3,6 +3,5 @@ node_modules/
 
 # nuxt.js build output
 .nuxt
-_nuxt
 
 .DS_Store
