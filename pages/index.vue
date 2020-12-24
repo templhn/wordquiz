@@ -191,6 +191,7 @@ export default {
         return false;
       }
       this.stage += n;
+      return true;
     }
   },
   mounted() {
