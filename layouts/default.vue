@@ -332,7 +332,12 @@ span.small {
 }
 
 .clear {
-  padding: 30px 0;
+  width: 90%;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding-bottom: 50px;
 }
 .clear .inner {
   background: #f0f8ffe1;
