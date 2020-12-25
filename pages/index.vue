@@ -4,18 +4,32 @@
       <h1>
         <span style="color: blue;">韓</span
         ><span style="color: red;">国</span>語クエスト<span class="small"
-          >0.1</span
+          >0.2</span
         >
       </h1>
-    </div>
-    <div class="nav">
       <div
-        v-for="(theme, key) in dictionary"
-        class="nav-btn theme"
-        :key="key"
-        @click="init(theme)"
+        class="ham-menu-btn"
+        :class="isShowHamMenu ? 'on' : 'off'"
+        @click="isShowHamMenu = !isShowHamMenu"
       >
-        {{ theme.titlej }}
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+    <div v-show="isShowHamMenu" class="ham-menu">
+      <div v-for="(category, ck) in dictionary" :key="ck" class="nav">
+        <div class="category_title">
+          {{ category.titlej }} - {{ category.titlek }}
+        </div>
+        <div
+          v-for="(theme, tk) in category.map"
+          class="nav-btn theme"
+          :key="tk"
+          @click="init(theme)"
+        >
+          {{ theme.titlej }}
+        </div>
       </div>
     </div>
     <template v-if="page === 0">
@@ -44,7 +58,9 @@
         </div>
         <div class="quest">
           <div class="question">
-            <span>{{ quest.question }} </span>
+            <span :style="`font-size: ${currentTheme.fontSize}`"
+              >{{ quest.question }}
+            </span>
           </div>
           <ul class="choices">
             <li
@@ -84,6 +100,7 @@ const KR = 1;
 export default {
   data() {
     return {
+      themes: {},
       quests: [],
       stage: 0,
       page: 0,
@@ -94,7 +111,8 @@ export default {
       toastClass: null,
       toastTimeOut: null,
       webTranslator: null,
-      webDictionary: null
+      webDictionary: null,
+      isShowHamMenu: false
     };
   },
   watch: {
@@ -119,14 +137,15 @@ export default {
   methods: {
     init(theme) {
       if (theme === undefined) {
-        const keys = Array.from(Object.keys(dictionary));
-        theme = dictionary[keys[Math.floor(Math.random() * keys.length)]];
+        const keys = Array.from(Object.keys(this.themes));
+        theme = this.themes[keys[Math.floor(Math.random() * keys.length)]];
       }
       this.currentTheme = theme;
-      let shuffled = this.shuffle(theme.list);
+      const shuffled = this.shuffle(theme.list);
       this.quests = this.makeQuests(shuffled);
       this.stage = 0;
       this.page = 0;
+      this.isShowHamMenu = false;
     },
     shuffle(array) {
       array = [].concat(array);
@@ -161,7 +180,7 @@ export default {
     },
     makeQuests(array) {
       const quests = [];
-      for (let i = 0; i < array.length && i < 10; i++) {
+      for (let i = 0; i < array.length; i++) {
         const quest = {};
         quest.question = array[i][KR];
         quest.answer = array[i][JP];
@@ -173,7 +192,6 @@ export default {
             choices.push(randJp);
           }
         }
-
         for (let i = 0; i < choices.length; i++) {
           let rand = Math.floor(Math.random() * (i + 1));
           [choices[i], choices[rand]] = [choices[rand], choices[i]];
@@ -195,10 +213,13 @@ export default {
     }
   },
   mounted() {
+    for (const key of Object.keys(dictionary)) {
+      this.themes = Object.assign(this.themes, dictionary[key].map);
+    }
     this.init();
-    window.addEventListener("beforeunload", (e) => {
-      e.returnValue = ' '
-    })
+    // window.addEventListener("beforeunload", (e) => {
+    //   e.returnValue = ' '
+    // })
   }
 };
 </script>

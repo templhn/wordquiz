@@ -155,6 +155,80 @@ span.small {
   margin: 0 5px;
 }
 
+.container {
+  padding-top: 40px;
+}
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  z-index: 11;
+  background: #fffe;
+}
+.ham-menu-btn {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 50px;
+  height: 50px;
+}
+.ham-menu-btn > span {
+  background: #000;
+  left: 15px;
+  width: 20px;
+  height: 2px;
+  display: block;
+  position: absolute;
+  transition: 0.3s;
+}
+.ham-menu-btn > span:nth-child(1) {
+  top: 12px;
+}
+.ham-menu-btn > span:nth-child(2) {
+  top: 18px;
+}
+.ham-menu-btn > span:nth-child(3) {
+  top: 24px;
+}
+.ham-menu-btn.on > span:nth-child(1) {
+  top: 18px;
+  transform: rotate(45deg);
+}
+.ham-menu-btn.on > span:nth-child(2) {
+  opacity: 0;
+}
+.ham-menu-btn.on > span:nth-child(3) {
+  top: 18px;
+  transform: rotate(135deg);
+}
+
+.category_title {
+  background: aliceblue;
+  padding: 10px;
+  border-left: 1px solid #08f;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.ham-menu {
+  background: #fffe;
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  padding-top: 36px;
+  box-sizing: border-box;
+}
+.ham-menu .nav {
+  background: #fff;
+}
+
 .nav {
   margin: 15px auto;
 }
@@ -179,14 +253,14 @@ span.small {
   color: #fff;
   margin: 5px;
 }
-.nav-btn:hover {
+.nav-btn:active {
   background: #227a95aa;
 }
 
 .nav-btn.theme {
   background: #ff6b49;
 }
-.nav-btn.theme:hover {
+.nav-btn.theme:active {
   background: #ff6b49aa;
 }
 
@@ -222,7 +296,8 @@ span.small {
 }
 .question {
   text-align: center;
-  font-size: 90px;
+  font-size: 70px;
+  padding: 15px 0;
 }
 .question span {
   background: #fffc;
@@ -237,8 +312,9 @@ span.small {
   background: #eef5;
   font-size: 20px;
 }
-.choices > li:hover {
+.choices > li:active {
   background: #eef;
+  transition: 0.3s background;
 }
 .choices > li:before {
 }
